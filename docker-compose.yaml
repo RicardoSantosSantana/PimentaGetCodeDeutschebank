@@ -1,14 +1,27 @@
-version: "3.0"
 services:
   database:
     image: rssantan/mysql8dev
     container_name: banco
-    env_file: ./.env
+    env_file: .env
     ports:
-      - "3399:3306"
+      - "3306:3306"
     volumes:
       - ./mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bank-transaction-network
+
+    # Serviço para rodar o Next.js
+  nextjs-app:
+    build:
+      context: .  # Caminho para o Dockerfile
+      dockerfile: Dockerfile  # Nome do Dockerfile
+    container_name: nextjs_app
+    env_file: .env
+    ports:
+      - "3000:3000"  # Porta que será exposta
+    environment:
+      - NODE_ENV=production
     networks:
       - bank-transaction-network
 
@@ -17,7 +30,7 @@ services:
     container_name: pma
     links:
       - database
-    env_file: ./.env
+    env_file: .env
     restart: always
     ports:
       - 8085:80

@@ -9,8 +9,8 @@ export default function Returns() {
         <div className={styles.container}>
             <form>
                 <div className={styles.field}>
-                    <label><span>CODE:</span> {query?.code} </label>
-                    <label><span>STATE:</span> {query?.state} </label>
+                    <label class="returnvalue"><span class="returnvalue">CODE :</span> {query?.code} </label>
+                    <label class="returnvalue"><span class="returnvalue">STATE:</span> {query?.state} </label>
                 </div>
             </form>
         </div>
